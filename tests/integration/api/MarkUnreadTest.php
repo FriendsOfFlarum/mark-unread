@@ -12,13 +12,13 @@
 namespace FoF\MarkUnread\Tests\integration\api;
 
 use Carbon\Carbon;
+use Flarum\Discussion\Discussion;
 use Flarum\Discussion\UserState;
+use Flarum\Post\Post;
 use Flarum\Testing\integration\RetrievesAuthorizedUsers;
 use Flarum\Testing\integration\TestCase;
-use PHPUnit\Framework\Attributes\Test;
 use Flarum\User\User;
-use Flarum\Discussion\Discussion;
-use Flarum\Post\Post;
+use PHPUnit\Framework\Attributes\Test;
 
 class MarkUnreadTest extends TestCase
 {

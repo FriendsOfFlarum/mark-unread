@@ -21,14 +21,14 @@ class DiscussionResourceFields
     {
         return [
             Schema\Boolean::make('canMarkUnread')
-                ->get(fn (Discussion $discussion, Context $context) => ! $context->getActor()->isGuest() && $context->getActor()->can('markUnread', $discussion)),
+                ->get(fn (Discussion $discussion, Context $context) => !$context->getActor()->isGuest() && $context->getActor()->can('markUnread', $discussion)),
 
             // Write-only: 2.x rejects undeclared attributes, so the PATCH {unread: true} needs a field to land on.
             Schema\Boolean::make('unread')
                 ->hidden()
                 ->writable(fn (Discussion $discussion, Context $context) => $context->updating())
                 ->set(function (Discussion $discussion, bool $unread, Context $context) {
-                    if (! $unread) {
+                    if (!$unread) {
                         return;
                     }
 
