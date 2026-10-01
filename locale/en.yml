@@ -1,8 +1,8 @@
-blomstra-mark-unread:
+fof-mark-unread:
   admin:
     permissions:
-      mark-unread: Mark a discussion as unread
+      mark_unread_label: Mark discussions as unread
 
   forum:
-    controls:
-      mark-unread: Mark unread
+    discussion_controls:
+      mark_unread_button: Mark as unread

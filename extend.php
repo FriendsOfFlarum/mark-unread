@@ -1,18 +1,17 @@
 <?php
 
 /*
- * This file is part of blomstra/mark-unread.
+ * This file is part of fof/mark-unread.
  *
- * Copyright (c) 2021 Blomstra Ltd.
+ * Copyright (c) FriendsOfFlarum.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Blomstra\MarkUnread;
+namespace FoF\MarkUnread;
 
 use Flarum\Api\Serializer\DiscussionSerializer;
-use Flarum\Discussion\Discussion;
 use Flarum\Discussion\Event\Saving;
 use Flarum\Extend;
 
@@ -26,10 +25,8 @@ return [
     new Extend\Locales(__DIR__.'/locale'),
 
     (new Extend\ApiSerializer(DiscussionSerializer::class))
-        ->attribute('canMarkUnread', function (DiscussionSerializer $serializer, Discussion $discussion, array $attributes) {
-            return $serializer->getActor()->can('markUnread', $discussion);
-        }),
+        ->attributes(Api\AddDiscussionAttributes::class),
 
     (new Extend\Event())
-        ->listen(Saving::class, Listeners\MarkUnread::class),
+        ->listen(Saving::class, Listener\MarkUnread::class),
 ];

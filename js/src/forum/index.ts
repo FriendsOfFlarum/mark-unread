@@ -1,6 +1,8 @@
 import app from 'flarum/forum/app';
-import extendDiscussions from './extend/extendDiscussions';
+import extendDiscussionControls from './extenders/extendDiscussionControls';
 
-app.initializers.add('blomstra/mark-unread', () => {
-  extendDiscussions();
+export { default as extend } from './extend';
+
+app.initializers.add('fof/mark-unread', () => {
+  extendDiscussionControls();
 });
