@@ -11,13 +11,8 @@
 
 namespace FoF\MarkUnread;
 
-use Flarum\Api\Serializer\DiscussionSerializer;
-use Flarum\Discussion\Event\Saving;
-use Flarum\Extend;
-use Flarum\Api\Context;
-use Flarum\Api\Endpoint;
 use Flarum\Api\Resource;
-use Flarum\Api\Schema;
+use Flarum\Extend;
 
 return [
     (new Extend\Frontend('forum'))
@@ -28,10 +23,6 @@ return [
 
     new Extend\Locales(__DIR__.'/locale'),
 
-    // @TODO: Replace with the new implementation https://docs.flarum.org/2.x/extend/api#extending-api-resources
-    (new Extend\ApiSerializer(DiscussionSerializer::class))
-        ->attributes(Api\AddDiscussionAttributes::class),
-
-    (new Extend\Event())
-        ->listen(Saving::class, Listener\MarkUnread::class),
+    (new Extend\ApiResource(Resource\DiscussionResource::class))
+        ->fields(Api\DiscussionResourceFields::class),
 ];
