@@ -22,7 +22,7 @@ class MarkUnread
         $discussion = $event->discussion;
 
         // Saving also fires when a discussion is started; there is no read state to reset yet.
-        if (! $discussion->exists || ! Arr::get($event->data, 'attributes.unread')) {
+        if (!$discussion->exists || !Arr::get($event->data, 'attributes.unread')) {
             return;
         }
 

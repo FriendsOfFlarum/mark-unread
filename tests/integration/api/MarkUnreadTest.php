@@ -56,7 +56,7 @@ class MarkUnreadTest extends TestCase
         return $this->send(
             $this->request('PATCH', '/api/discussions/1', [
                 'authenticatedAs' => $userId,
-                'json' => [
+                'json'            => [
                     'data' => [
                         'attributes' => [
                             'unread' => $unread,

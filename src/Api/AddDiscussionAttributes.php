@@ -25,7 +25,7 @@ class AddDiscussionAttributes
     {
         $actor = $serializer->getActor();
 
-        $attributes['canMarkUnread'] = ! $actor->isGuest() && $actor->can('markUnread', $discussion);
+        $attributes['canMarkUnread'] = !$actor->isGuest() && $actor->can('markUnread', $discussion);
 
         return $attributes;
     }
