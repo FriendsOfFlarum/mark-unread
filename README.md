@@ -47,5 +47,5 @@ This extension was originally sponsored by [Kagi Search](https://kagi.com/), an 
 
 - [Packagist](https://packagist.org/packages/fof/mark-unread)
 - [GitHub](https://github.com/FriendsOfFlarum/mark-unread)
-- [Discuss](https://discuss.flarum.org/d/29369)
+- [Discuss](https://discuss.flarum.org/d/39955)
 - [Report an issue](https://github.com/FriendsOfFlarum/mark-unread/issues)
