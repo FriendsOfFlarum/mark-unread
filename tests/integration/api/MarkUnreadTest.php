@@ -15,6 +15,10 @@ use Carbon\Carbon;
 use Flarum\Discussion\UserState;
 use Flarum\Testing\integration\RetrievesAuthorizedUsers;
 use Flarum\Testing\integration\TestCase;
+use PHPUnit\Framework\Attributes\Test;
+use Flarum\User\User;
+use Flarum\Discussion\Discussion;
+use Flarum\Post\Post;
 
 class MarkUnreadTest extends TestCase
 {
@@ -27,7 +31,7 @@ class MarkUnreadTest extends TestCase
         $this->extension('fof-mark-unread');
 
         $this->prepareDatabase([
-            'users' => [
+            User::class => [
                 $this->normalUser(),
                 ['id' => 3, 'username' => 'moderator', 'password' => '$2y$10$LO59tiT7uggl6Oe23o/O6.utnF6ipngYjvMvaxo1TciKqBttDNKim', 'email' => 'moderator@machine.local', 'is_email_confirmed' => 1],
             ],
@@ -37,10 +41,10 @@ class MarkUnreadTest extends TestCase
             'group_permission' => [
                 ['group_id' => 4, 'permission' => 'discussion.markUnread'],
             ],
-            'discussions' => [
+            Discussion::class => [
                 ['id' => 1, 'title' => 'Read discussion', 'created_at' => Carbon::now()->subDay(), 'last_posted_at' => Carbon::now()->subDay(), 'user_id' => 1, 'first_post_id' => 1, 'last_post_id' => 2, 'last_post_number' => 2, 'comment_count' => 2],
             ],
-            'posts' => [
+            Post::class => [
                 ['id' => 1, 'discussion_id' => 1, 'created_at' => Carbon::now()->subDay(), 'user_id' => 1, 'type' => 'comment', 'content' => '<t><p>First</p></t>', 'number' => 1],
                 ['id' => 2, 'discussion_id' => 1, 'created_at' => Carbon::now()->subDay(), 'user_id' => 1, 'type' => 'comment', 'content' => '<t><p>Second</p></t>', 'number' => 2],
             ],
@@ -78,9 +82,7 @@ class MarkUnreadTest extends TestCase
             ->first();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function user_with_permission_can_mark_discussion_unread()
     {
         $response = $this->markUnread(3);
@@ -96,9 +98,7 @@ class MarkUnreadTest extends TestCase
         $this->assertNull($state->last_read_at);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function user_without_permission_cannot_mark_discussion_unread()
     {
         $response = $this->markUnread(2);
@@ -110,9 +110,7 @@ class MarkUnreadTest extends TestCase
         $this->assertNotNull($state->last_read_at);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function unread_false_leaves_read_state_untouched()
     {
         $response = $this->markUnread(3, false);
@@ -124,9 +122,7 @@ class MarkUnreadTest extends TestCase
         $this->assertNotNull($state->last_read_at);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function admin_can_mark_never_read_discussion_unread()
     {
         $this->assertNull($this->stateFor(1));
@@ -141,9 +137,7 @@ class MarkUnreadTest extends TestCase
         $this->assertNull($state->last_read_at);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_mark_unread_attribute_reflects_permission()
     {
         $canMarkUnread = function (?int $userId): bool {
@@ -162,9 +156,7 @@ class MarkUnreadTest extends TestCase
         $this->assertFalse($canMarkUnread(null));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function guest_never_gets_can_mark_unread_even_with_permission()
     {
         $this->prepareDatabase([
